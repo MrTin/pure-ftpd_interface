@@ -1,0 +1,22 @@
+.container
+  .col-md-12
+    %table.table.table-striped.table-bordered.table-hover.table-condensed
+      %thead
+        %tr
+          %th User
+          %th Action
+          %th Time ago
+          %th File
+          %th Size
+          %th Date
+          %th Code
+      %tbody
+        - @logs.each do |line|
+          %tr
+            %td= line[:username]
+            %td= line[:method]
+            %td= line[:date]
+            %td= line[:path].sub!(ENV['REMOVE_PATH_PREFIX'], '')
+            %td= line[:bytes]
+            %td= line[:date]
+            %td= line[:status_code]

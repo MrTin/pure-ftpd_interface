@@ -3,13 +3,11 @@ module Kookie
 
     class Interface < Sinatra::Base
 
-      disable :static
-
-      set :erb, escape_html: true,
-                layout_options: { views: 'views/layouts' }
-
       get '/' do
+        log_lines = File.readlines('test/support_files/transfers.log').reverse[0, ENV['TAIL_LINES'].to_i].to_a
+        @logs = LogParser.new(log_lines).parse
 
+        haml :index
       end
 
       use Rack::Deflater
