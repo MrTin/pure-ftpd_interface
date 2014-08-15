@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+gem 'thin', '~> 1.6.2'
 gem 'sinatra', '~> 1.4.5'
 gem 'dotenv', '~> 0.11.1'
 gem 'haml', '~> 4.0.5'
