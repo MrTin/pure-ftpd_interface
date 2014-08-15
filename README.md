@@ -10,7 +10,7 @@ Sinatra app to interface with the server using mysql as user backend.
 ## Production setup
 1. `bundle`
 2. `cp .env.example .env`
-3. Edit the `.env` to your hearts content 
+3. Edit the `.env` to your hearts content
 
 ## Production start
 Start the server by running (omit `-d` to start in foreground):
