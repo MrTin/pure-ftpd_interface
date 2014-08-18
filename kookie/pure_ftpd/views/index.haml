@@ -12,6 +12,7 @@
           %th Code
       %tbody
         - @logs.each do |line|
+          - next if line[:method] == 'GET'
           %tr
             %td= line[:username]
             %td= line[:method]
