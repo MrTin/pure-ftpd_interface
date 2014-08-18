@@ -18,6 +18,6 @@
             %td= line[:method]
             %td= line[:date]
             %td= line[:path].sub!(ENV['REMOVE_PATH_PREFIX'], '')
-            %td= line[:bytes]
+            %td= bytes_to_human_size(line[:bytes])
             %td= line[:date]
             %td= line[:status_code]

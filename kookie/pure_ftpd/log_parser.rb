@@ -26,7 +26,7 @@ module Kookie
               method: columns[3],
               path: URI.unescape(columns[4]),
               status_code: columns[5],
-              bytes: columns[6]
+              bytes: columns[6].to_i
             }
           end
 
