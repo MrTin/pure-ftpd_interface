@@ -24,7 +24,7 @@ module Kookie
               username: columns[1],
               date: columns[2],
               method: columns[3],
-              path: columns[4],
+              path: URI.unescape(columns[4]),
               status_code: columns[5],
               bytes: columns[6]
             }
