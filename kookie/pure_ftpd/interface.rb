@@ -4,7 +4,7 @@ module Kookie
     class Interface < Sinatra::Base
 
       get '/' do
-        log_lines = File.readlines('test/support_files/transfers.log').reverse[0, ENV['TAIL_LINES'].to_i].to_a
+        log_lines = File.readlines(ENV['LOG_PATH']).reverse[0, ENV['TAIL_LINES'].to_i].to_a
         @logs = LogParser.new(log_lines).parse
 
         haml :index
