@@ -1,23 +1,62 @@
 .container
-  .col-md-12
-    %table.table.table-striped.table-bordered.table-hover.table-condensed
-      %thead
-        %tr
-          %th User
-          %th Action
-          %th Time ago
-          %th File
-          %th Size
-          %th Date
-          %th Code
-      %tbody
-        - @logs.each do |line|
-          - next if line[:method] == 'GET'
+
+  .row
+    .col-md-12
+
+      %h3 Latest uploads
+
+      %table.table.table-striped.table-bordered.table-hover.table-condensed
+        %thead
           %tr
-            %td= line[:username]
-            %td= line[:method]
-            %td= line[:date]
-            %td= line[:path].sub!(ENV['REMOVE_PATH_PREFIX'], '')
-            %td= bytes_to_human_size(line[:bytes])
-            %td= line[:date]
-            %td= line[:status_code]
+            %th Account
+            %th File
+            %th Size
+            %th Time ago
+            %th Status
+        %tbody
+          - @logs.each do |line|
+            - next if line[:method] == 'GET'
+            %tr
+              %td= line[:username]
+              %td= strip_path_and_username_from(line[:path], line[:username])
+              %td= bytes_to_human_size(line[:bytes])
+              %td= minutes_in_words(line[:date].to_time.to_i)
+
+              - if line[:status_code] == 200
+                %td.success OK
+              - else
+                %td.warning ERR (#{line[:status_code]})
+
+  .row.row-with-bottom-margin
+    .col-md-6
+
+      %h3 Existing accounts
+
+      %table.table.table-striped.table-bordered.table-hover
+        %thead
+          %tr
+            %th{ width: '100%' } Account
+            %th Destroy
+
+        %tbody
+          - User.each do |user|
+            %tr
+              %td= user[:User]
+              %td
+                %a{href: "users/destroy/#{user[:User]}", onClick: 'javascript:return confirm("Are you sure you want to delete this account?")'} Destroy
+
+
+    .col-md-6
+
+      %form{method: :post, action: 'users/create'}
+
+        %h3 Create a new FTP account
+        %p Take note that <strong>usernames are limited to #{ENV['USERNAME_MAX_LENGTH']} characters</strong> in length and should be <strong>lowercase</strong> only using characters <strong>a-z, no underscores or other special characters</strong>.
+
+        .form-group
+          %input.form-control{ type: 'text', name: 'username', placeholder: 'Username', maxlength: 10 }
+
+        .form-group
+          %input.form-control{ type: 'text', name: 'password', readonly: 'readonly', value: suggest_password }
+
+        %button.btn.btn-primary{ type: 'submit', onClick: 'javascript:return confirm("Did you remember to copy the generated password?")'} Create

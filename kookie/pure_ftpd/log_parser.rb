@@ -22,15 +22,19 @@ module Kookie
             formatted_lines << {
               ip: columns[0],
               username: columns[1],
-              date: columns[2],
+              date: parse_date(columns[2]),
               method: columns[3],
               path: URI.unescape(columns[4]),
-              status_code: columns[5],
+              status_code: columns[5].to_i,
               bytes: columns[6].to_i
             }
           end
 
           formatted_lines
+        end
+
+        def parse_date(date_string)
+          Time.strptime(date_string, '%d/%b/%Y:%T %z')
         end
 
         def find_columns(line)

@@ -4,5 +4,21 @@
     %title= ENV['APP_NAME']
     %link(rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css")
     %meta(http-equiv="refresh" content="60")
+
+    :css
+      .row-with-bottom-margin { margin-bottom: 40px; }
+      .messages { margin-top: 40px; padding: 20px 40px }
+
   %body
+    .container
+      .row
+        - if flash[:error]
+          %p.messages.bg-danger= flash[:error]
+
+        - if flash[:success]
+          %p.messages.bg-success= flash[:success]
+
+        - if flash[:info]
+          %p.messages.bg-info= flash[:info]
+
     = yield
