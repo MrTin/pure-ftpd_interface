@@ -21,10 +21,10 @@ module Kookie
 
             formatted_lines << {
               ip: columns[0],
-              username: columns[1],
+              username: ensure_safe_encoding(columns[1]),
               date: parse_date(columns[2]),
               method: columns[3],
-              path: URI.unescape(columns[4]),
+              path: URI.unescape(ensure_safe_encoding(columns[4])),
               status_code: columns[5].to_i,
               bytes: columns[6].to_i
             }
@@ -51,6 +51,10 @@ module Kookie
           # columns[4] = /home/ftp-accounts/gyj/miabelleza/MIA%20BELLEZA%20108.PDF
           # columns[5] = 200
           # columns[6] = 17233868
+        end
+
+        def ensure_safe_encoding(text)
+          text.encode('UTF-8', 'binary', invalid: :replace, undef: :replace, replace: '')
         end
     end
   end
