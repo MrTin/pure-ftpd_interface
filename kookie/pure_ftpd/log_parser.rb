@@ -54,7 +54,7 @@ module Kookie
         end
 
         def ensure_safe_encoding(text)
-          text.encode!(Encoding::ASCII).encode('UTF-8', 'US-ASCII', invalid: :replace, undef: :replace)
+          text.encode!('UTF-8', 'US-ASCII', invalid: :replace, undef: :replace)
         end
     end
   end
