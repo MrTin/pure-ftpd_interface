@@ -54,7 +54,7 @@ module Kookie
         end
 
         def ensure_safe_encoding(text)
-          text.encode('UTF-8', 'binary', invalid: :replace, undef: :replace, replace: '')
+          text.force_encoding('UTF-8')
         end
     end
   end
