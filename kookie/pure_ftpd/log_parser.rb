@@ -24,7 +24,7 @@ module Kookie
               username: ensure_safe_encoding(columns[1]),
               date: parse_date(columns[2]),
               method: columns[3],
-              path: URI.unescape(ensure_safe_encoding(columns[4])),
+              path: ensure_safe_encoding(URI.unescape(columns[4])),
               status_code: columns[5].to_i,
               bytes: columns[6].to_i
             }
@@ -54,7 +54,7 @@ module Kookie
         end
 
         def ensure_safe_encoding(text)
-          text.force_encoding('UTF-8')
+          text.encode!(Encoding::ASCII).encode('UTF-8', 'US-ASCII', invalid: :replace, undef: :replace)
         end
     end
   end
